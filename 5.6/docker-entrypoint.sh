@@ -31,13 +31,13 @@ if [ "$1" = 'mysqld' ]; then
 		fi
 
 		mkdir -p "$DATADIR"
-		chown -R mysql:mysql "$DATADIR"
+		# chown -R mysql:mysql "$DATADIR"
 
 		echo 'Running mysql_install_db'
-		mysql_install_db --user=mysql --datadir="$DATADIR" --rpm --keep-my-cnf
+		mysql_install_db --user=root --datadir="$DATADIR" --rpm --keep-my-cnf
 		echo 'Finished mysql_install_db'
 
-		mysqld --user=mysql --datadir="$DATADIR" --skip-networking &
+		mysqld --user=root --datadir="$DATADIR" --skip-networking &
 		for i in $(seq 30 -1 0); do
 			[ -S "$SOCKET" ] && break
 			echo 'MySQL init process in progress...'
@@ -97,7 +97,7 @@ if [ "$1" = 'mysqld' ]; then
 		echo 'MySQL init process done. Ready for start up.'
 	fi
 
-	chown -R mysql:mysql "$DATADIR"
+	# chown -R mysql:mysql "$DATADIR"
 fi
 
 exec "$@"

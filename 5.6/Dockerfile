@@ -1,7 +1,7 @@
 FROM debian:wheezy
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r mysql && useradd -r -g mysql mysql
+# RUN groupadd -r mysql && useradd -r -g mysql mysql
 
 # FATAL ERROR: please install the following Perl modules before executing /usr/local/mysql/scripts/mysql_install_db:
 # File::Basename
@@ -31,6 +31,7 @@ RUN { \
 
 # comment out a few problematic configuration values
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf
+RUN sed -Ei 's/^user.+= mysql/user = root/' /etc/mysql/my.cnf
 
 VOLUME /var/lib/mysql
 
