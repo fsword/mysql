@@ -32,6 +32,9 @@ RUN { \
 # comment out a few problematic configuration values
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf
 RUN sed -Ei 's/^user.+= mysql/user = root/' /etc/mysql/my.cnf
+# ignore domain name resolve
+RUN echo "skip-name-resolve" >> /etc/mysql/my.cnf
+RUN echo "skip-host-cache" >> /etc/mysql/my.cnf
 
 VOLUME /var/lib/mysql
 
